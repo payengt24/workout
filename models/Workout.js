@@ -9,11 +9,17 @@ const WorkoutSchema = new Schema({
         type: Date,
     },
     exercises: {
-        type: [
-            
-        ]
+        type: []
     },
 });
+
+WorkoutSchema.virtual("totalDuration").get(function() {
+    let total = 0;
+    this.exercises.forEach(e => {
+        total += e.duration;
+    });
+    return total;
+})
 
 const Workout = mongoose.model("Workout", WorkoutSchema);
 
